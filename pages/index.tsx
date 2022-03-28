@@ -1,21 +1,19 @@
 import Head from 'next/head';
 import getPosts from '@src/lib/getPosts';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import { PostMeta } from 'src/lib/getPosts';
 import BlogCard from './_common/BlogCard';
 
-const Main = styled.main`
-  width: 70%;
-`;
 const BlogCardWrapper = styled.div`
-  margin-top: 5px;
-  width: 100%;
-  margin-bottom: 5px;
+  width: 70%;
+  padding: 10px; 0px;
 `;
-
+const Main = styled.main`
+  width: 100%;
+`;
 export default function Home({ posts }: { posts: PostMeta[] }) {
   return (
     <div className="container">
@@ -28,7 +26,7 @@ export default function Home({ posts }: { posts: PostMeta[] }) {
         <Header title="Brian Reidy" />
         <p className="description">Blogs</p>
         {posts.map((post) => (
-          <BlogCardWrapper>
+          <BlogCardWrapper key={post.slug}>
             <BlogCard post={post} />
           </BlogCardWrapper>
         ))}
