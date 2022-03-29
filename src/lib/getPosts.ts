@@ -1,23 +1,26 @@
 import path from 'path';
 import fs from 'fs/promises';
 import parseFrontMatter from 'front-matter';
+
 import { z } from 'zod';
 
 const Post = z.object({
   attributes: z.object({
     title: z.string(),
     date: z.string(),
+    description: z.string().optional(),
   }),
   body: z.string(),
 });
-export type PostMeta = {
+
+// A little different then above because I flatten and add slug k/v
+export type Post = {
   slug: string;
   title: string;
   date: string;
   body: string;
+  description: string;
 };
-
-// relative to the server output not the source!
 
 const postsPath = './posts';
 const getPosts = async () => {
@@ -28,7 +31,7 @@ const getPosts = async () => {
       const content = parseFrontMatter(file.toString());
       try {
         const {
-          attributes: { title, date },
+          attributes: { title, date, description = '' },
           body,
         } = Post.parse(content);
         return {
@@ -36,6 +39,7 @@ const getPosts = async () => {
           title,
           date,
           body,
+          description,
         };
       } catch (e) {
         console.log('failed to parse post', e);
@@ -43,6 +47,27 @@ const getPosts = async () => {
       }
     }),
   );
+};
+
+export const getPost = async (slug: string) => {
+  const file = await fs.readFile(path.join(postsPath, `${slug}.md`));
+  const content = parseFrontMatter(file.toString());
+  try {
+    const {
+      attributes: { title, date, description = '' },
+      body,
+    } = Post.parse(content);
+    return {
+      slug,
+      title,
+      date,
+      body,
+      description,
+    };
+  } catch (e) {
+    console.log('failed to parse post', e);
+    return null;
+  }
 };
 
 export default getPosts;

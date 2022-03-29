@@ -1,10 +1,10 @@
 import Head from 'next/head';
+import { InferGetStaticPropsType } from 'next';
 import getPosts from '@src/lib/getPosts';
 import styled from '@emotion/styled';
 
 import Header from '@components/Header';
 import Footer from '@components/Footer';
-import { PostMeta } from 'src/lib/getPosts';
 import BlogCard from './_common/BlogCard';
 
 const BlogCardWrapper = styled.div`
@@ -14,7 +14,9 @@ const BlogCardWrapper = styled.div`
 const Main = styled.main`
   width: 100%;
 `;
-export default function Home({ posts }: { posts: PostMeta[] }) {
+export default function Home({
+  posts,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className="container">
       <Head>
@@ -25,11 +27,14 @@ export default function Home({ posts }: { posts: PostMeta[] }) {
       <Main>
         <Header title="Brian Reidy" />
         <p className="description">Blogs</p>
-        {posts.map((post) => (
-          <BlogCardWrapper key={post.slug}>
-            <BlogCard post={post} />
-          </BlogCardWrapper>
-        ))}
+        {posts.map(
+          (post) =>
+            post && (
+              <BlogCardWrapper key={post.slug}>
+                <BlogCard post={post} />
+              </BlogCardWrapper>
+            ),
+        )}
       </Main>
       <Footer />
     </div>
@@ -38,7 +43,6 @@ export default function Home({ posts }: { posts: PostMeta[] }) {
 
 export const getStaticProps = async () => {
   const posts = await getPosts();
-  console.log('posts', posts);
   return {
     props: { posts },
   };
