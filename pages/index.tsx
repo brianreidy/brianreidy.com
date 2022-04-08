@@ -27,13 +27,12 @@ export default function Home({
       <Main>
         <Header title="Brian Reidy" />
         <p className="description">Blogs</p>
-        {posts.map(
-          (post) =>
-            post && (
-              <BlogCardWrapper key={post.slug}>
-                <BlogCard post={post} />
-              </BlogCardWrapper>
-            ),
+        {posts.map((post) =>
+          post ? (
+            <BlogCardWrapper key={post.slug}>
+              <BlogCard post={post} />
+            </BlogCardWrapper>
+          ) : null,
         )}
       </Main>
       <Footer />
