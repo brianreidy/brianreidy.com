@@ -18,7 +18,8 @@ const Main = styled.main`
   align-items: flex-start;
 `;
 
-const Post = ({ post }: { post: Post }) => {
+const Post = ({ post }: { post: Post | undefined }) => {
+  if (!post) return null;
   const mdText = marked.parse(post.body);
   return (
     <Background>
@@ -35,10 +36,11 @@ const Post = ({ post }: { post: Post }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params: { slug },
-}) => {
-  const post = await getPost(slug);
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  if (!params || !params.slug || typeof params.slug !== 'string') {
+    return { props: { post: undefined } };
+  }
+  const post = await getPost(params.slug);
 
   return {
     props: {

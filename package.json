@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "next export"
+    "export": "next export",
+    "test":  "tsc -p ./tsconfig.json --noEmit --skipLibCheck"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
