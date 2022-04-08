@@ -18,7 +18,7 @@ const Main = styled.main`
   align-items: flex-start;
 `;
 
-const Post = ({ post }: { post: Post | undefined }) => {
+const Post = ({ post }: { post: Post | null }) => {
   if (!post) return null;
   const mdText = marked.parse(post.body);
   return (
@@ -38,7 +38,7 @@ const Post = ({ post }: { post: Post | undefined }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params || !params.slug || typeof params.slug !== 'string') {
-    return { props: { post: undefined } };
+    return { props: { post: null } };
   }
   const post = await getPost(params.slug);
 
