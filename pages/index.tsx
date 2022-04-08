@@ -15,7 +15,7 @@ const Main = styled.main`
   width: 100%;
 `;
 export default function Home({
-  posts,
+  posts = [],
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className="container">
