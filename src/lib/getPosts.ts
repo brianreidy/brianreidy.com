@@ -23,6 +23,17 @@ export type Post = {
 };
 
 const postsPath = './posts';
+
+export const getPostPaths = async () => {
+  const dir = await fs.readdir('./posts');
+  const dirNameNoFileType = dir
+    .map((r) => r.replace(/\.md$/, ''))
+    .map((r) => r.replace(/\%2F/, '/'));
+  return dirNameNoFileType.map((path) => ({
+    params: { slug: path },
+  }));
+};
+
 const getPosts = async () => {
   const dir = await fs.readdir('./posts');
   return Promise.all(
