@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 
 import Header from '@components/Header';
 import Footer from '@components/Footer';
-import BlogCard from './_common/BlogCard';
+import BlogCard from '@components/BlogCard';
 
 const BlogCardWrapper = styled.div`
   width: 70%;
