@@ -3,8 +3,8 @@ import { marked } from 'marked';
 import styled from '@emotion/styled';
 
 import Header from '@components/Header';
-import { getPost, Post } from '@src/lib/getPosts';
-import { GetServerSideProps } from 'next';
+import { getPost, getPostPaths, Post } from '@src/lib/getPosts';
+import { GetStaticProps } from 'next';
 
 const Background = styled.div`
   display: flex;
@@ -36,7 +36,15 @@ const Post = ({ post }: { post: Post | null }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export async function getStaticPaths() {
+  const possiblePostPaths = await getPostPaths();
+  return {
+    paths: possiblePostPaths,
+    fallback: true, // false or 'blocking'
+  };
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params || !params.slug || typeof params.slug !== 'string') {
     return { props: { post: null } };
   }
