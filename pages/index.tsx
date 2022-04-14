@@ -4,29 +4,41 @@ import getPosts from '@src/lib/getPosts';
 import styled from '@emotion/styled';
 
 import Header from '@components/Header';
-import Footer from '@components/Footer';
 import BlogCard from '@components/BlogCard';
+import colors from '@src/lib/colors';
 
+const Container = styled.div`
+  padding-top:1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+c  background-color: ${colors.background.primary};
+`;
 const BlogCardWrapper = styled.div`
-  width: 70%;
   padding: 10px; 0px;
+  width:100%;
 `;
 const Main = styled.main`
-  width: 100%;
+  width: 50%;
+
+  padding: 10px; 0px;
+  @media (max-width: 768px) {
+  width: 95%;
+  }
 `;
 export default function Home({
   posts = [],
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div className="container">
+    <Container>
       <Head>
         <title>Brian Reidy</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Main>
-        <Header title="Brian Reidy" />
-        <p className="description">Blogs</p>
+        <Header />
         {posts.map((post) =>
           post ? (
             <BlogCardWrapper key={post.slug}>
@@ -35,8 +47,7 @@ export default function Home({
           ) : null,
         )}
       </Main>
-      <Footer />
-    </div>
+    </Container>
   );
 }
 

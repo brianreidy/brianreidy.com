@@ -2,7 +2,6 @@ import Head from 'next/head';
 import { marked } from 'marked';
 import styled from '@emotion/styled';
 
-import Header from '@components/Header';
 import { getPost, getPostPaths, Post } from '@src/lib/getPosts';
 import { GetStaticProps } from 'next';
 
@@ -29,7 +28,6 @@ const Post = ({ post }: { post: Post | null }) => {
       </Head>
 
       <Main>
-        <Header title={post.title} />
         <div dangerouslySetInnerHTML={{ __html: mdText }}></div>
       </Main>
     </Background>
