@@ -1,0 +1,19 @@
+[15:19:23.570] Global cache location '/Users/brianreidy/Library/Caches/typescript/4.7', safe file path '/users/brianreidy/.emacs.d/.cache/lsp/npm/typescript/lib/node_modules/typescript/lib/typingsafelist.json', types map path /users/brianreidy/.emacs.d/.cache/lsp/npm/typescript/lib/node_modules/typescript/lib/typesmap.json
+[15:19:23.572] Processing cache location '/Users/brianreidy/Library/Caches/typescript/4.7'
+[15:19:23.572] Trying to find '/Users/brianreidy/Library/Caches/typescript/4.7/package.json'...
+[15:19:23.574] Loaded content of '/Users/brianreidy/Library/Caches/typescript/4.7/package.json': {"private":true,"dependencies":{"types-registry":"^0.1.596"}}
+[15:19:23.574] Loaded content of '/Users/brianreidy/Library/Caches/typescript/4.7/package-lock.json'
+[15:19:23.574] Finished processing cache location '/Users/brianreidy/Library/Caches/typescript/4.7'
+[15:19:23.575] Process id: 8931
+[15:19:23.575] NPM location: /Users/brianreidy/.nvm/versions/node/v16.13.1/bin/npm (explicit '--npmLocation' not  provided)
+[15:19:23.575] validateDefaultNpmLocation: false
+[15:19:23.575] Npm config file: /Users/brianreidy/Library/Caches/typescript/4.7/package.json
+[15:19:23.575] Updating types-registry npm package...
+[15:19:23.576] Exec: /Users/brianreidy/.nvm/versions/node/v16.13.1/bin/npm install --ignore-scripts types-registry@latest
+[15:19:24.638]     Succeeded. stdout:
+    
+    up to date, audited 2 packages in 779ms
+
+found 0 vulnerabilities
+
+[15:19:24.638] Updated types-registry npm package
