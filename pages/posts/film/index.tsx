@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <Container>
       {range(1, 38).map((i) => (
-        <Image key={i} src={`/static/images/2022_June_B&W_New_York/${i}.JPG`} />
+        <Image key={i} src={`/2022_June_B&W_New_York/${i}.JPG`} />
       ))}
     </Container>
   );
