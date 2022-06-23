@@ -27,6 +27,15 @@ const Main = styled.main`
   width: 95%;
   }
 `;
+
+const FilmPost = {
+  slug: 'film',
+  title: 'spring film shoot',
+  date: '2022/6/8',
+  body: 'harmon disposable but not actually disposable film camera',
+  description: '',
+};
+
 export default function Home({
   posts = [],
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -39,6 +48,10 @@ export default function Home({
 
       <Main>
         <Header />
+        <BlogCardWrapper>
+          <BlogCard post={FilmPost} />
+        </BlogCardWrapper>
+
         {posts.map((post) =>
           post ? (
             <BlogCardWrapper key={post.slug}>
