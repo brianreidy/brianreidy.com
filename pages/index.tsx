@@ -16,8 +16,8 @@ const Container = styled.div`
 c  background-color: ${colors.background.primary};
 `;
 const BlogCardWrapper = styled.div`
-  padding: 10px; 0px;
-  width:100%;
+  padding: 10px 0px 10px 0px;
+  width: 100%;
 `;
 const Main = styled.main`
   width: 50%;
@@ -26,6 +26,7 @@ const Main = styled.main`
   @media (max-width: 768px) {
   width: 95%;
   }
+  align-items:baseline;
 `;
 
 const FilmPost = {
