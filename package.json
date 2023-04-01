@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "export": "next export",
-    "test":  "tsc -p ./tsconfig.json --noEmit --skipLibCheck"
+    "test": "tsc -p ./tsconfig.json --noEmit --skipLibCheck"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -18,9 +18,11 @@
     "@types/marked": "^4.0.3",
     "@types/styled-components": "^5.1.24",
     "front-matter": "^4.0.2",
+    "lodash": "^4.17.21",
     "marked": "^4.0.12",
     "next": "^12.0.7",
     "prettier": "^2.6.0",
+    "prismjs": "^1.29.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.3",
@@ -29,6 +31,8 @@
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^4.2.5",
+    "@types/lodash": "^4.14.192",
+    "@types/prismjs": "^1.26.0",
     "@types/react": "^17.0.40"
   }
 }

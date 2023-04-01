@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import Head from 'next/head';
 import { marked } from 'marked';
 import styled from '@emotion/styled';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-typescript';
 
 import { getPost, getPostPaths, Post } from '@src/lib/getPosts';
 import { GetStaticProps } from 'next';
@@ -18,6 +21,12 @@ const Main = styled.main`
 `;
 
 const Post = ({ post }: { post: Post | null }) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      Prism.highlightAll();
+    }
+  }, []);
+
   if (!post) return null;
   const mdText = marked.parse(post.body);
   return (
