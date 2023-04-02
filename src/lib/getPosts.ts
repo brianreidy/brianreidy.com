@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import parseFrontMatter from 'front-matter';
 import { z } from 'zod';
 
-import NonmarkdownPosts from 'pages/posts/NonmarkdownPosts';
+import NonmarkdownPosts from 'NonMarkdownPosts';
 
 const Post = z.object({
   attributes: z.object({
