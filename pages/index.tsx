@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { InferGetStaticPropsType } from 'next';
-import getPosts from '@src/lib/getPosts';
+import getPosts, { sortPosts } from '@src/lib/getPosts';
 import styled from '@emotion/styled';
+import { compact } from 'lodash';
 
 import Header from '@components/Header';
 import BlogCard from '@components/BlogCard';
@@ -29,14 +30,6 @@ const Main = styled.main`
   align-items:baseline;
 `;
 
-const FilmPost = {
-  slug: 'film',
-  title: 'spring film shoot',
-  date: '2022/6/8',
-  body: 'harmon disposable but not actually disposable film camera',
-  description: '',
-};
-
 export default function Home({
   posts = [],
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -49,17 +42,11 @@ export default function Home({
 
       <Main>
         <Header />
-        <BlogCardWrapper>
-          <BlogCard post={FilmPost} />
-        </BlogCardWrapper>
-
-        {posts.map((post) =>
-          post ? (
-            <BlogCardWrapper key={post.slug}>
-              <BlogCard post={post} />
-            </BlogCardWrapper>
-          ) : null,
-        )}
+        {posts.map((post) => (
+          <BlogCardWrapper key={post.slug}>
+            <BlogCard post={post} />
+          </BlogCardWrapper>
+        ))}
       </Main>
     </Container>
   );
@@ -67,7 +54,8 @@ export default function Home({
 
 export const getStaticProps = async () => {
   const posts = await getPosts();
+  const sortedPosts = sortPosts(compact(posts));
   return {
-    props: { posts },
+    props: { posts: sortedPosts },
   };
 };

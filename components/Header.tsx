@@ -26,7 +26,6 @@ export default function Header() {
   const [isDesktop, setDesktop] = useState(false);
 
   useEffect(() => {
-    console.log('hey');
     if (typeof window !== 'undefined') {
       setDesktop(window.innerWidth > 650);
     }

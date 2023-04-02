@@ -1,8 +1,9 @@
 import path from 'path';
 import fs from 'fs/promises';
 import parseFrontMatter from 'front-matter';
-
 import { z } from 'zod';
+
+import NonmarkdownPosts from 'NonMarkdownPosts';
 
 const Post = z.object({
   attributes: z.object({
@@ -36,27 +37,37 @@ export const getPostPaths = async () => {
 
 const getPosts = async () => {
   const dir = await fs.readdir('./posts');
-  return Promise.all(
-    dir.map(async (filename) => {
-      const file = await fs.readFile(path.join(postsPath, filename));
-      const content = parseFrontMatter(file.toString());
-      try {
-        const {
-          attributes: { title, date, description = '' },
-          body,
-        } = Post.parse(content);
-        return {
-          slug: filename.replace(/\.md$/, ''),
-          title,
-          date,
-          body,
-          description,
-        };
-      } catch (e) {
-        console.log('failed to parse post', e);
-        return null;
-      }
-    }),
+  return [
+    ...NonmarkdownPosts,
+    ,
+    ...(await Promise.all(
+      dir.map(async (filename) => {
+        const file = await fs.readFile(path.join(postsPath, filename));
+        const content = parseFrontMatter(file.toString());
+        try {
+          const {
+            attributes: { title, date, description = '' },
+            body,
+          } = Post.parse(content);
+          return {
+            slug: filename.replace(/\.md$/, ''),
+            title,
+            date,
+            body,
+            description,
+          };
+        } catch (e) {
+          console.log('failed to parse post', e);
+          return Promise.resolve(null);
+        }
+      }),
+    )),
+  ];
+};
+
+export const sortPosts = (posts: Post[]) => {
+  return posts.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 };
 
