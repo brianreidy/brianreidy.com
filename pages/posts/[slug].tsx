@@ -1,24 +1,28 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import { marked } from 'marked';
-import styled from '@emotion/styled';
+import { styled } from '@mui/material/styles';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
 
 import { getPost, getPostPaths, Post } from '@src/lib/getPosts';
 import { GetStaticProps } from 'next';
 
-const Background = styled.div`
+const Background = styled('div')`
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: center;
 `;
-const Main = styled.main`
-  display: flex;
-  width: 60%;
-  align-items: flex-start;
-`;
+const Main = styled('main')(({ theme }) => ({
+  display: 'flex',
+  width: '90%',
+  alignItems: 'flex-start',
+  padding: 0,
+  [theme.breakpoints.up('md')]: {
+    width: '60%',
+  },
+}));
 
 const Post = ({ post }: { post: Post | null }) => {
   useEffect(() => {
@@ -34,11 +38,10 @@ const Post = ({ post }: { post: Post | null }) => {
       <Head>
         <title>{post.title}</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <Main>
-        <div dangerouslySetInnerHTML={{ __html: mdText }}></div>
-      </Main>
+      <Main dangerouslySetInnerHTML={{ __html: mdText }} />
     </Background>
   );
 };
