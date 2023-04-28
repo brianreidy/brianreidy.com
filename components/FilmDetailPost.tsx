@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { range } from 'lodash';
 
 const Container = styled.section`
   display: flex;
@@ -16,23 +17,25 @@ const Image = styled.img`
   max-height: 100vh;
   margin: 0 auto;
 `;
-const range = (start: number, end: number) => {
-  const length = end - start;
-  return Array.from({ length }, (_, i) => start + i);
+
+type Props = {
+  imageCount: number;
+  folderName: string;
 };
-export default function Home() {
+
+export default function Film({ imageCount, folderName }: Props) {
   return (
     <Container>
-      {range(1, 38).map((i) => (
+      {range(1, imageCount + 1).map((i) => (
         <Picture>
           <source
             media="(max-width:600px)"
-            srcSet={`/2022_June_B&W_New_York/${i}_mobile.JPEG`}
+            srcSet={`/${folderName}/${i}_mobile.JPEG`}
           />
           <Image
             key={i}
-            src={`/2022_June_B&W_New_York/${i}.JPEG`}
-            alt="spring images in black and white"
+            src={`/${folderName}/${i}.JPEG`}
+            alt="images in black and white"
             loading="lazy"
           />
         </Picture>
