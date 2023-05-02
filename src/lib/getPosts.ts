@@ -50,7 +50,7 @@ const getPosts = async () => {
             body,
           } = Post.parse(content);
           return {
-            slug: filename.replace(/\.md$/, ''),
+            slug: `posts/${filename.replace(/\.md$/, '')}`,
             title,
             date,
             body,

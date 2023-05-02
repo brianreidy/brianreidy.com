@@ -7,6 +7,7 @@ import { compact } from 'lodash';
 import Header from '@components/Header';
 import BlogCard from '@components/BlogCard';
 import colors from '@src/lib/colors';
+import { Typography } from '@mui/material';
 
 const Container = styled.div`
   padding-top:1em;
@@ -47,6 +48,19 @@ export default function Home({
             <BlogCard post={post} />
           </BlogCardWrapper>
         ))}
+        {/* TODO: abstract games into its own componentabstract games into its own component */}
+        <Typography variant="h2" color={colors.text.primary}>
+          Games
+        </Typography>
+        <BlogCard
+          post={{
+            slug: '/games/squarecolors',
+            title: 'square colors',
+            date: '2023/5/01',
+            body: 'chose the color thats different',
+            description: 'recreation of an android app i made in highschool',
+          }}
+        />
       </Main>
     </Container>
   );

@@ -6,7 +6,7 @@ import { Post } from '@src/lib/getPosts';
 import colors from '@src/lib/colors';
 
 const BlogCard = ({ post }: { post: Post }) => (
-  <CardActionArea href={`/posts/${post.slug}`} component="a">
+  <CardActionArea href={`${post.slug}`} component="a">
     <Card
       sx={[
         {
