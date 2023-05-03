@@ -1,4 +1,12 @@
-import { Button, Container, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  LinearProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 
 const buttonArray = Array.from(Array(36).keys()); // creates an array of 49 numbers from 0 to 48
@@ -33,6 +41,46 @@ function getDifferentRGB(
 }
 const initialRGB = { r: 33, g: 158, b: 188 };
 
+const useGameTimer = (): [number, (n: number) => void] => {
+  const [timer, setTimer] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimer((prevTimer) => prevTimer - 1);
+    }, 1000);
+
+    if (timer === 0) {
+      clearInterval(intervalId);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [timer]);
+
+  return [timer, setTimer];
+};
+
+const useBlinking = (): [boolean, (b: boolean) => void] => {
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [startBlinking, setStartBlinking] = useState(false);
+
+  useEffect(() => {
+    if (startBlinking) {
+      const blinkInterval = setInterval(() => {
+        setIsBlinking((prevIsBlinking) => !prevIsBlinking);
+      }, 500);
+
+      // stop blinking after 5 seconds
+      setTimeout(() => {
+        clearInterval(blinkInterval);
+        setIsBlinking(false);
+      }, 5000);
+
+      return () => clearInterval(blinkInterval);
+    }
+  }, [startBlinking]);
+  return [isBlinking, setStartBlinking];
+};
+
 const useGame = () => {
   const [color, setColor] = useState(rgb(initialRGB));
   const [offColor, setOffColor] = useState(
@@ -40,30 +88,92 @@ const useGame = () => {
   );
   const [selectedTile, setSelectedTile] = useState(5);
   const [currentLevel, setCurrentLevel] = useState(0);
+  const [score, setScore] = useState(0);
+  const [gameStatus, setGameStatus] = useState<'idle' | 'playing' | 'complete'>(
+    'idle',
+  );
 
-  const handleClick = (index: number) => {
+  const [isBlinking, setStartBlinking] = useBlinking();
+  const [timer, setTimer] = useGameTimer();
+
+  const win = () => {
     const newBaseColor = colors[Math.floor(Math.random() * colors.length)];
     setColor(rgb(newBaseColor));
     setSelectedTile(Math.floor(Math.random() * 36));
-    if (selectedTile === index) {
-      setCurrentLevel(currentLevel + 1);
-      setOffColor(rgb(getDifferentRGB(newBaseColor, levelIndex(currentLevel))));
-    } else {
-      setCurrentLevel(0);
-      setOffColor(rgb(getDifferentRGB(newBaseColor, levelIndex(0))));
+    setScore(score + currentLevel * timer);
+    setCurrentLevel(currentLevel + 1);
+    setOffColor(rgb(getDifferentRGB(newBaseColor, levelIndex(currentLevel))));
+    setStartBlinking(false);
+    setTimer(10);
+    if (gameStatus === 'complete') {
+      setGameStatus('playing');
+      setScore(0);
     }
   };
-  return { color, offColor, selectedTile, currentLevel, handleClick };
+
+  const loss = () => {
+    setCurrentLevel(0);
+    setGameStatus('complete');
+    setStartBlinking(true);
+    setTimer(0);
+
+    // todo save score
+  };
+
+  useEffect(() => {
+    if (timer === 0 && gameStatus === 'complete') {
+      loss();
+    }
+  }, [timer, gameStatus]);
+
+  const handleClick = (index: number) => {
+    if (selectedTile === index) {
+      win();
+    } else {
+      loss();
+    }
+  };
+  return {
+    color,
+    offColor,
+    selectedTile,
+    score,
+    currentLevel,
+    timer,
+    isGameComplete: gameStatus === 'complete',
+    isBlinking,
+    handleClick,
+  };
 };
 
 export default function SquareColors() {
-  const { color, offColor, selectedTile, currentLevel, handleClick } =
-    useGame();
+  const {
+    color,
+    offColor,
+    selectedTile,
+    score,
+    currentLevel,
+    timer,
+    isBlinking,
+    handleClick,
+  } = useGame();
   return (
     <Container
-      sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}
+      sx={{ height: '100vh', display: 'flex', flexDirection: 'column', py: 1 }}
     >
-      <Typography variant="h4">Score: {currentLevel}</Typography>
+      <Stack direction="row" alignItems="center" sx={{ pb: 1 }}>
+        <LinearProgress
+          variant="determinate"
+          value={timer * 10}
+          sx={{ my: 1, width: '100%' }}
+        />
+        <Typography
+          variant="h5"
+          sx={{ pl: 1, whiteSpace: 'nowrap', color: 'text.primary' }}
+        >
+          score: {score} level: {currentLevel}
+        </Typography>
+      </Stack>
       <Grid container spacing={0.5} display="flex" height="100%">
         {buttonArray.map((value) => (
           <Grid item key={value} xs={2} display="flex">
@@ -71,6 +181,8 @@ export default function SquareColors() {
               variant="contained"
               onClick={() => handleClick(value)}
               sx={{
+                minWidth: 'unset',
+                opacity: isBlinking && selectedTile === value ? 0.5 : 1,
                 display: 'flex',
                 width: '100%',
                 height: '100%',
