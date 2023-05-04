@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Container,
   Grid,
@@ -81,6 +80,20 @@ const useBlinking = (): [boolean, (b: boolean) => void] => {
   return [isBlinking, setStartBlinking];
 };
 
+const useHighScore = (): [number, (n: number) => void] => {
+  const [highscore, setHighscore] = useState(0);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const initialHighScore = localStorage.getItem('highscore');
+      if (initialHighScore) {
+        setHighscore(parseInt(initialHighScore));
+      }
+    }
+  }, []);
+  return [highscore, setHighscore];
+};
+
 const useGame = () => {
   const [color, setColor] = useState(rgb(initialRGB));
   const [offColor, setOffColor] = useState(
@@ -93,6 +106,7 @@ const useGame = () => {
     'idle',
   );
 
+  const [highscore, setHighscore] = useHighScore();
   const [isBlinking, setStartBlinking] = useBlinking();
   const [timer, setTimer] = useGameTimer();
 
@@ -118,6 +132,10 @@ const useGame = () => {
     setTimer(0);
 
     // todo save score
+    if (score > highscore) {
+      localStorage.setItem('highscore', score.toString());
+      setHighscore(score);
+    }
   };
 
   useEffect(() => {
@@ -138,6 +156,7 @@ const useGame = () => {
     offColor,
     selectedTile,
     score,
+    highscore,
     currentLevel,
     timer,
     isGameComplete: gameStatus === 'complete',
@@ -152,6 +171,7 @@ export default function SquareColors() {
     offColor,
     selectedTile,
     score,
+    highscore,
     currentLevel,
     timer,
     isBlinking,
@@ -171,7 +191,7 @@ export default function SquareColors() {
           variant="h5"
           sx={{ pl: 1, whiteSpace: 'nowrap', color: 'text.primary' }}
         >
-          score: {score} level: {currentLevel}
+          level: {currentLevel} score: {score} highscore: {highscore}
         </Typography>
       </Stack>
       <Grid container spacing={0.5} display="flex" height="100%">
