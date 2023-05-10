@@ -7,27 +7,24 @@ import { compact } from 'lodash';
 import Header from '@components/Header';
 import BlogCard from '@components/BlogCard';
 import colors from '@src/lib/colors';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 
-const Container = styled.div`
-  padding-top:1em;
+const Wrapper = styled.div`
+  padding-top: 1em;
+  padding-bottom: 1em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-c  background-color: ${colors.background.primary};
+  background-color: ${colors.background.primary};
 `;
 const BlogCardWrapper = styled.div`
   padding: 10px 0px 10px 0px;
   width: 100%;
 `;
-const Main = styled.main`
-  width: 50%;
+const CenterRail = styled(Container)`
 
   padding: 10px; 0px;
-  @media (max-width: 768px) {
-  width: 95%;
-  }
   align-items:baseline;
 `;
 
@@ -35,13 +32,13 @@ export default function Home({
   posts = [],
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Container>
+    <Wrapper>
       <Head>
-        <title>Brian Reidy</title>
+        <title>brian reidy</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Main>
+      <CenterRail maxWidth="md">
         <Header />
         {posts.map((post) => (
           <BlogCardWrapper key={post.slug}>
@@ -49,8 +46,9 @@ export default function Home({
           </BlogCardWrapper>
         ))}
         {/* TODO: abstract games into its own componentabstract games into its own component */}
-        <Typography variant="h2" color={colors.text.primary}>
-          Games
+
+        <Typography gutterBottom variant="h2" color={colors.text.primary}>
+          games
         </Typography>
         <BlogCard
           post={{
@@ -61,8 +59,8 @@ export default function Home({
             description: 'recreation of an android app i made in highschool',
           }}
         />
-      </Main>
-    </Container>
+      </CenterRail>
+    </Wrapper>
   );
 }
 

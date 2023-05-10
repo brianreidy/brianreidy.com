@@ -34,31 +34,31 @@ export default function Header() {
     <HorizontalView>
       <VerticalView>
         <Typography variant="h1" color={colors.text.primary}>
-          Brian Reidy
+          brian reidy
         </Typography>
 
         {!isDesktop && <Image src="/6af6cfe.jpeg" alt="Brian on a bike" />}
-        <Typography variant="h2" color={colors.text.primary}>
-          About
+        <Typography gutterBottom variant="h2" color={colors.text.primary}>
+          about
         </Typography>
 
         <Typography variant="body1" color={colors.text.primary}>
-          three questions i get to know someone
+          <i>three questions i get to know someone</i>
           <br />
-          what is your hobby?
+          <b>what is your hobby?</b>
           <br />
           walking through new neigborhoods, bike rides and eating.
           <br />
-          what is your favorite food?
+          <b>what is your favorite food?</b>
           <br />
           I love xi'an style hand pulled noodles.
           <br />
-          when and where was the last time you saw a monkey?
+          <b>when and where was the last time you saw a monkey?</b>
           <br />
           2019 at arashiyama monkey park iwatayama in japan.
         </Typography>
-        <Typography variant="h2" color={colors.text.primary}>
-          Posts
+        <Typography gutterBottom variant="h2" color={colors.text.primary}>
+          posts
         </Typography>
       </VerticalView>
       {isDesktop && <Image src="/6af6cfe.jpeg" alt="Brian on a bike" />}

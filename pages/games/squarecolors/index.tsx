@@ -181,7 +181,11 @@ export default function SquareColors() {
     <Container
       sx={{ height: '100vh', display: 'flex', flexDirection: 'column', py: 1 }}
     >
-      <Stack direction="row" alignItems="center" sx={{ pb: 1 }}>
+      <Stack
+        direction={{ xs: 'column', md: 'row' }}
+        alignItems="center"
+        sx={{ pb: 1 }}
+      >
         <LinearProgress
           variant="determinate"
           value={timer * 10}
