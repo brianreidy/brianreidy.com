@@ -18,7 +18,9 @@ const Main = styled('main')(({ theme }) => ({
   display: 'flex',
   width: '90%',
   alignItems: 'flex-start',
-  padding: 0,
+  paddingTop: theme.spacing(1),
+  paddingBottom: theme.spacing(3),
+
   [theme.breakpoints.up('md')]: {
     width: '60%',
   },
