@@ -2,15 +2,7 @@ import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import colors from '@src/lib/colors';
-import bicycleClear from 'public/bicycleClear.jpg';
-
-const Image = styled('img')(({ imgOpacity }: { imgOpacity?: number }) => ({
-  height: '15em',
-  width: '15em',
-  borderRadius: '5em',
-  transition: 'opacity 0.5s ease-in-out',
-  opacity: imgOpacity ?? 1,
-}));
+import ImgToggler from './ImgToggler';
 
 const HorizontalView = styled.div`
   width: 100%;
@@ -26,26 +18,6 @@ const VerticalView = styled.div`
 `;
 
 export default function Header() {
-  const [isDesktop, setDesktop] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
-  // TODO: abstract fading image component
-  const [imgOpacity, setImgOpacity] = useState(1);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setDesktop(window.innerWidth > 650);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (imgOpacity === 0) {
-      setTimeout(() => {
-        setImgOpacity(1);
-        setIsHovered(!isHovered);
-      }, 500);
-    }
-  }, [imgOpacity]);
   return (
     <HorizontalView>
       <VerticalView>
@@ -53,7 +25,20 @@ export default function Header() {
           brian reidy
         </Typography>
 
-        {!isDesktop && <Image src="/6af6cfe.jpeg" alt="Brian on a bike" />}
+        <ImgToggler
+          additionalStyles={{
+            height: '15em',
+            width: '15em',
+            borderRadius: '3em',
+            marginTop: '1em',
+            marginBottom: '1em',
+          }}
+          additionalStylesDesktop={{ display: 'none' }}
+          initialSrc="/bicycleClear.jpeg"
+          secondarySrc="/bicycleDrawing.jpeg"
+          alt="Brian on a bike"
+        />
+
         <Typography gutterBottom variant="h2" color={colors.text.primary}>
           about
         </Typography>
@@ -77,22 +62,17 @@ export default function Header() {
           posts
         </Typography>
       </VerticalView>
-      {isDesktop && (
-        <div
-          onMouseEnter={() => {
-            setImgOpacity(0);
-          }}
-          onMouseLeave={() => {
-            setImgOpacity(0);
-          }}
-        >
-          <Image
-            src={isHovered ? '/bicycleClear.jpeg' : '/bicycleDrawing.jpeg'}
-            imgOpacity={imgOpacity}
-            alt="Brian on a bike"
-          />
-        </div>
-      )}
+      <ImgToggler
+        additionalStyles={{
+          height: '20em',
+          width: '20em',
+          borderRadius: '3em',
+        }}
+        additionalStylesMobile={{ display: 'none' }}
+        initialSrc="/bicycleClear.jpeg"
+        secondarySrc="/bicycleDrawing.jpeg"
+        alt="Brian on a bike"
+      />
     </HorizontalView>
   );
 }
