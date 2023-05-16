@@ -2,12 +2,7 @@ import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import colors from '@src/lib/colors';
-
-const Image = styled.img`
-  height: 15em;
-  width: 15em;
-  border-radius: 5em;
-`;
+import ImgToggler from './ImgToggler';
 
 const HorizontalView = styled.div`
   width: 100%;
@@ -23,13 +18,6 @@ const VerticalView = styled.div`
 `;
 
 export default function Header() {
-  const [isDesktop, setDesktop] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setDesktop(window.innerWidth > 650);
-    }
-  }, []);
   return (
     <HorizontalView>
       <VerticalView>
@@ -37,7 +25,20 @@ export default function Header() {
           brian reidy
         </Typography>
 
-        {!isDesktop && <Image src="/6af6cfe.jpeg" alt="Brian on a bike" />}
+        <ImgToggler
+          additionalStyles={{
+            height: '15em',
+            width: '15em',
+            borderRadius: '3em',
+            marginTop: '1em',
+            marginBottom: '1em',
+          }}
+          additionalStylesDesktop={{ display: 'none' }}
+          initialSrc="/bicycleClear.jpeg"
+          secondarySrc="/bicycleDrawing.jpeg"
+          alt="Brian on a bike"
+        />
+
         <Typography gutterBottom variant="h2" color={colors.text.primary}>
           about
         </Typography>
@@ -61,7 +62,17 @@ export default function Header() {
           posts
         </Typography>
       </VerticalView>
-      {isDesktop && <Image src="/6af6cfe.jpeg" alt="Brian on a bike" />}
+      <ImgToggler
+        additionalStyles={{
+          height: '20em',
+          width: '20em',
+          borderRadius: '3em',
+        }}
+        additionalStylesMobile={{ display: 'none' }}
+        initialSrc="/bicycleClear.jpeg"
+        secondarySrc="/bicycleDrawing.jpeg"
+        alt="Brian on a bike"
+      />
     </HorizontalView>
   );
 }
