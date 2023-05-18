@@ -14,17 +14,28 @@ const Background = styled('div')`
   justify-items: center;
   align-items: center;
 `;
-const Main = styled('main')(({ theme }) => ({
-  display: 'flex',
-  width: '90%',
-  alignItems: 'flex-start',
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(3),
+const Main = styled('main')(
+  ({ theme }) => `
+  display: flex;
+  width: 90%;
+  align-items: flex-start;
+  padding-top: ${theme.spacing(1)};
+  padding-bottom: ${theme.spacing(3)};
 
-  [theme.breakpoints.up('md')]: {
-    width: '60%',
-  },
-}));
+  ${theme.breakpoints.up('md')} {
+    width: 60%;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  pre {
+    width: 100%;
+    overflow: scroll;
+  }
+`,
+);
 
 const Post = ({ post }: { post: Post | null }) => {
   useEffect(() => {

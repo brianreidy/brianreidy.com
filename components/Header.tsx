@@ -37,7 +37,9 @@ export default function Header() {
           brian reidy
         </Typography>
 
-        {!isDesktop && <Image src="/6af6cfe.jpeg" alt="Brian on a bike" />}
+        {!isDesktop && (
+          <Image src="/brianOnBikeWaterColor.jpeg" alt="Brian on a bike" />
+        )}
         <Typography gutterBottom variant="h2" color={colors.text.primary}>
           about
         </Typography>
@@ -61,7 +63,9 @@ export default function Header() {
           posts
         </Typography>
       </VerticalView>
-      {isDesktop && <Image src="/6af6cfe.jpeg" alt="Brian on a bike" />}
+      {isDesktop && (
+        <Image src="/brianOnBikeWaterColor.jpeg" alt="Brian on a bike" />
+      )}
     </HorizontalView>
   );
 }
