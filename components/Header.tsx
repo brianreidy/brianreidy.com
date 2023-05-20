@@ -45,7 +45,7 @@ export default function Header() {
         </Typography>
 
         <Typography variant="body1" color={colors.text.primary}>
-          <i>three questions i get to know someone</i>
+          <i>three questions i ask to get to know someone</i>
           <br />
           <b>what is your hobby?</b>
           <br />
