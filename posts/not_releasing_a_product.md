@@ -9,16 +9,17 @@ As a society, we often prioritize productivity and success over everything else.
 
 This sentiment is especially true in the tech industry, where companies and individuals are often pressured to release products quickly and frequently. However, not every feature or product is worth releasing. Sometimes, it's better to hold off on releasing something until it's truly ready, or until it aligns with your long-term goals and strategies.
 
-Take, for example, this pull request here: https://github.com/brianreidy/brianreidy.com/pull/19/files. The feature allows for an image to change from one photo to another photo when you hover over it. The idea being i would change from a photoshopped drawing of an image to an actual photo when hovering over the image.
-
-![Water color image of me on a bike](/brianOnBikeWaterColor.jpeg)
-
-Water color image of me on a bike
-
-![Original image of me on a bike](/brianOnBikeOriginal.jpeg)
-
-Original image of me on a bike
-
+Take, for example, this [pull request](https://github.com/brianreidy/brianreidy.com/pull/19/files). The feature allows for an image to change from one photo to another photo when you hover over it. The idea being i would change from a photoshopped drawing of an image to an actual photo when hovering over the image.
+<img
+  style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top:10px;
+  padding-bottom:10px;
+  width: 90%;"
+  src="/bikeImgComparison.jpeg" 
+  alt="Comparison of the Original image of me on a bike and the watercolor"
+  />
 While this may seem like a small feature, it's a perfect example of when it's okay to not release a product.
 
 While the pull request worked and i got it running locally. I didn't like the distraction it added to my website. Even with the css opacity transition this feature felt too distracting and weird for a user. It's not a crucial aspect of the website, and I felt it was better to wait until it's a part of a larger update or redesign makes more sense in the long run. For example if i had an album of drawings with a post focused on the different tools used to convert images into water color.
