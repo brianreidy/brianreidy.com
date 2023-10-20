@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: ${colors.background.primary};
   height: 100vh;
+  overflow: hidden;
 `;
 const CenterRail = styled(Container)`
   display: flex;
@@ -27,7 +28,7 @@ const CenterRail = styled(Container)`
   align-items: center;
   padding: 10px; 0px;
   flex-direction: column;
-  height:100%;
+  height: 100%;
 `;
 
 const useTimer = (
@@ -92,6 +93,10 @@ export default function GymTimer() {
       <Head>
         <title>brian reidy</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        ></meta>
       </Head>
       <audio ref={audioRef}>
         <source src="/cowBells.wav" type="audio/wav" />
