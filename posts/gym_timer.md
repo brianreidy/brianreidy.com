@@ -1,7 +1,9 @@
 ---
-title: I made a simple gym timer
+title: I made a simple gym rest timer
 date: 2023/10/19
 ---
+
+# I made a simple gym rest timer
 
 Project: [https://brianreidy.com/GymTimer](/GymTimer)
 
