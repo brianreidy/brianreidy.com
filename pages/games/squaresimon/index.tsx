@@ -126,14 +126,14 @@ export default function SquareColors() {
               disabled={gameStatus === 'displayingSequence'}
               sx={{
                 minWidth: 'unset',
-                opacity: tilesForBlinking[blinkingIndex] === value ? 1 : 0.7,
+                opacity: tilesForBlinking[blinkingIndex] === value ? 1 : 0.3,
                 display: 'flex',
                 width: '100%',
                 height: '100%',
                 aspectRatio: 1,
                 backgroundColor: color,
                 '&:hover': {
-                  opacity: 1,
+                  opacity: 0.7,
                   backgroundColor: color,
                 },
               }}
