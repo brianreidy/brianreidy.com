@@ -38,7 +38,7 @@ const useGame = () => {
     setCurrentLevel((level) => level + 1);
     setTilesForBlinking((tiles) => [
       ...tiles,
-      Math.floor(Math.random() * 5),
+      Math.floor(Math.random() * 4),
       -1,
     ]);
     setInputedSequence([]);
