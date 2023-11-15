@@ -16,9 +16,6 @@ function rgb({ r, g, b }: { r: number; g: number; b: number }) {
   return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
 
-const tilesForBlinking = [0, -1, 1, -1, 2, -1, 2, -1];
-const tiles = tilesForBlinking.filter((x) => x !== -1);
-
 const useHighScore = (): [number, (n: number) => void] => {
   const [highscore, setHighscore] = useState(0);
 
@@ -34,6 +31,7 @@ const useHighScore = (): [number, (n: number) => void] => {
 };
 
 const useGame = () => {
+  const [tilesForBlinking, setTilesForBlinking] = useState<number[]>([-1]);
   const [blinkingIndex, setBlinkingIndex] = useState(0);
   const [startBlinking, setStartBlinking] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
@@ -54,40 +52,45 @@ const useGame = () => {
       }, 1000); // Adjust the interval time as needed
       if (blinkingIndex === tilesForBlinking.length - 1) {
         clearInterval(intervalId);
+        setStartBlinking(false);
+        setBlinkingIndex(0);
         setGameStatus('waitingForInput');
       }
       return () => clearInterval(intervalId);
     }
-  }, [startBlinking, blinkingIndex, tiles.length]);
+  }, [startBlinking, blinkingIndex, tilesForBlinking.length]);
 
   const win = () => {
-    console.log('win');
     setCurrentLevel((level) => level + 1);
+    setTilesForBlinking((tiles) => [
+      ...tiles,
+      Math.floor(Math.random() * 5),
+      -1,
+    ]);
+    setInputedSequence([]);
     setGameStatus('displayingSequence');
   };
 
   const loss = () => {
-    console.log('loss');
     setCurrentLevel(0);
     setGameStatus('complete');
-
     // todo save score
     if (currentLevel > highscore) {
+      alert(`New High Score: ${currentLevel}\nrefresh the page to play again`);
       localStorage.setItem('highscore_simon', currentLevel.toString());
       setHighscore(currentLevel);
+      return;
     }
+    alert(`Gameover: ${currentLevel}\nrefresh the page to play again`);
   };
 
   useEffect(() => {
+    const tiles = tilesForBlinking.filter((x) => x !== -1);
     if (gameStatus === 'displayingSequence') {
       setStartBlinking(true);
     } else if (gameStatus === 'waitingForInput') {
-      const blah = tiles.slice(0, inputedSequence.length);
-      console.log('tiles', tiles);
-      console.log('blah', blah);
-      console.log('inputedSequence', inputedSequence);
-
-      if (!isEqual(blah, inputedSequence)) {
+      const tilesUpToInputedSequence = tiles.slice(0, inputedSequence.length);
+      if (!isEqual(tilesUpToInputedSequence, inputedSequence)) {
         loss();
       } else {
         if (tiles.length === inputedSequence.length) {
@@ -95,15 +98,14 @@ const useGame = () => {
         }
       }
     }
-  }, [gameStatus, inputedSequence]);
-
-  useEffect(() => {}, [inputedSequence]);
+  }, [gameStatus, inputedSequence, tilesForBlinking]);
 
   const handleClick = (index: number) => {
     setInputedSequence((prev) => [...prev, index]);
   };
 
   return {
+    tilesForBlinking,
     highscore,
     currentLevel,
     gameStatus,
@@ -113,8 +115,14 @@ const useGame = () => {
 };
 
 export default function SquareColors() {
-  const { highscore, currentLevel, blinkingIndex, handleClick, gameStatus } =
-    useGame();
+  const {
+    tilesForBlinking,
+    highscore,
+    currentLevel,
+    blinkingIndex,
+    handleClick,
+    gameStatus,
+  } = useGame();
   return (
     <Container
       sx={{ height: '100vh', display: 'flex', flexDirection: 'column', py: 1 }}
