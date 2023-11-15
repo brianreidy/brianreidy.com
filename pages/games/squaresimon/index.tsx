@@ -1,34 +1,10 @@
 import { Button, Container, Grid, Stack, Typography } from '@mui/material';
 import isEqual from 'lodash/isEqual';
-import compact from 'lodash/compact';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import useHighScore from '../_hooks/useHighScore';
+import { getRandomColor, getRandomColorRGB } from '../_colors';
 
 const buttonArray = Array.from(Array(4).keys());
-
-const colors = [
-  { r: 142, g: 202, b: 233 },
-  { r: 33, g: 158, b: 188 },
-  { r: 2, g: 48, b: 71 },
-  { r: 255, g: 183, b: 3 },
-  { r: 251, g: 133, b: 0 },
-];
-function rgb({ r, g, b }: { r: number; g: number; b: number }) {
-  return 'rgb(' + r + ',' + g + ',' + b + ')';
-}
-
-const useHighScore = (): [number, (n: number) => void] => {
-  const [highscore, setHighscore] = useState(0);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const initialHighScore = localStorage.getItem('highscore_simon');
-      if (initialHighScore) {
-        setHighscore(parseInt(initialHighScore));
-      }
-    }
-  }, []);
-  return [highscore, setHighscore];
-};
 
 const useGame = () => {
   const [tilesForBlinking, setTilesForBlinking] = useState<number[]>([-1]);
@@ -38,10 +14,8 @@ const useGame = () => {
   const [gameStatus, setGameStatus] = useState<
     'displayingSequence' | 'waitingForInput' | 'complete'
   >('displayingSequence');
-
   const [inputedSequence, setInputedSequence] = useState<number[]>([]);
-
-  const [highscore, setHighscore] = useHighScore();
+  const [highscore, setHighscore] = useHighScore('highscore_simon');
 
   useEffect(() => {
     if (startBlinking) {
@@ -123,6 +97,10 @@ export default function SquareColors() {
     handleClick,
     gameStatus,
   } = useGame();
+  const [color, setColor] = useState('');
+  useEffect(() => {
+    setColor(getRandomColorRGB());
+  }, []);
   return (
     <Container
       sx={{ height: '100vh', display: 'flex', flexDirection: 'column', py: 1 }}
@@ -153,10 +131,10 @@ export default function SquareColors() {
                 width: '100%',
                 height: '100%',
                 aspectRatio: 1,
-                backgroundColor: rgb(colors[0]),
+                backgroundColor: color,
                 '&:hover': {
                   opacity: 1,
-                  backgroundColor: rgb(colors[0]),
+                  backgroundColor: color,
                 },
               }}
             >
