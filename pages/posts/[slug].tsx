@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-typescript';
 
-import { getPost, getPostPaths, Post } from '@src/lib/getPosts';
+import { getPost, getPostPaths, Post } from '@src/getPosts';
 import { GetStaticProps } from 'next';
 
 const Background = styled('div')`

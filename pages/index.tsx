@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { InferGetStaticPropsType } from 'next';
-import getPosts, { sortPosts } from '@src/lib/getPosts';
+import getPosts, { sortPosts } from '@src/getPosts';
 import styled from '@emotion/styled';
 import { compact } from 'lodash';
 
 import Header from '@components/Header';
 import BlogCard from '@components/BlogCard';
-import colors from '@src/lib/colors';
+import colors from '@src/colors';
 import { Container, Typography } from '@mui/material';
 
 const Wrapper = styled.div`

@@ -7,8 +7,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { getDifferentRGB, getRandomColor, rgb } from '../_colors';
-import useHighScore from '../_hooks/useHighScore';
+import { getDifferentRGB, getRandomColor, rgb } from '@src/colors';
+import useHighScore from '../../../src/_hooks/useHighScore';
 
 const buttonArray = Array.from(Array(36).keys()); // creates an array of 49 numbers from 0 to 48
 

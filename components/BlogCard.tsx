@@ -2,8 +2,8 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
-import { Post } from '@src/lib/getPosts';
-import colors from '@src/lib/colors';
+import { Post } from '@src/getPosts';
+import colors from '@src/colors';
 
 const BlogCard = ({ post }: { post: Post }) => (
   <CardActionArea href={`${post.slug}`} component="a">

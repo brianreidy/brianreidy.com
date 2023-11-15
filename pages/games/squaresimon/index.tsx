@@ -1,8 +1,8 @@
 import { Button, Container, Grid, Stack, Typography } from '@mui/material';
 import isEqual from 'lodash/isEqual';
-import { useCallback, useEffect, useState } from 'react';
-import useHighScore from '../_hooks/useHighScore';
-import { getRandomColor, getRandomColorRGB } from '../_colors';
+import { useEffect, useState } from 'react';
+import useHighScore from '../../../src/_hooks/useHighScore';
+import { getRandomColorRGB } from '@src/colors';
 
 const buttonArray = Array.from(Array(4).keys());
 
