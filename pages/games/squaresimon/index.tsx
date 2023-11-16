@@ -50,9 +50,9 @@ const useGame = () => {
     setGameStatus('complete');
     // todo save score
     if (currentLevel > highscore) {
-      alert(`New High Score: ${currentLevel}\nrefresh the page to play again`);
       localStorage.setItem('highscore_simon', currentLevel.toString());
       setHighscore(currentLevel);
+      alert(`New High Score: ${currentLevel}\nrefresh the page to play again`);
       return;
     }
     alert(`Gameover: ${currentLevel}\nrefresh the page to play again`);
