@@ -82,7 +82,7 @@ const useGame = () => {
     tilesForBlinking,
     highscore,
     currentLevel,
-    gameStatus,
+    isDisplayingSequence: gameStatus === 'displayingSequence',
     blinkingIndex,
     handleClick,
   };
@@ -95,12 +95,13 @@ export default function SquareSimon() {
     currentLevel,
     blinkingIndex,
     handleClick,
-    gameStatus,
+    isDisplayingSequence,
   } = useGame();
   const [color, setColor] = useState('');
   useEffect(() => {
     setColor(getRandomColorRGB());
   }, []);
+
   return (
     <Container
       sx={{
@@ -128,7 +129,6 @@ export default function SquareSimon() {
             <Button
               variant="contained"
               onClick={() => handleClick(value)}
-              disabled={gameStatus === 'displayingSequence'}
               sx={{
                 minWidth: 'unset',
                 opacity: tilesForBlinking[blinkingIndex] === value ? 1 : 0.3,
@@ -136,12 +136,13 @@ export default function SquareSimon() {
                 width: '100%',
                 height: '100%',
                 aspectRatio: 1,
-                backgroundColor: color,
-                '&:hover': {
-                  opacity: 0.7,
-                  backgroundColor: color,
+                backgroundColor: isDisplayingSequence ? 'none' : color,
+                ':hover': {
+                  opacity: tilesForBlinking[blinkingIndex] === value ? 1 : 0.3,
+                  backgroundColor: isDisplayingSequence ? 'none' : color,
                 },
               }}
+              disabled={isDisplayingSequence}
             >
               {value}
             </Button>
