@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { InferGetStaticPropsType } from 'next';
-import getPosts, { sortPosts } from '@src/lib/getPosts';
+import getPosts, { sortPosts } from '@src/getPosts';
 import styled from '@emotion/styled';
 import { compact } from 'lodash';
 
 import Header from '@components/Header';
 import BlogCard from '@components/BlogCard';
-import colors from '@src/lib/colors';
+import colors from '@src/colors';
 import { Container, Typography } from '@mui/material';
 
 const Wrapper = styled.div`
@@ -50,15 +50,29 @@ export default function Home({
         <Typography gutterBottom variant="h2" color={colors.text.primary}>
           games
         </Typography>
-        <BlogCard
-          post={{
-            slug: '/games/squarecolors',
-            title: 'square colors',
-            date: '2023/5/01',
-            body: 'chose the color thats different',
-            description: 'recreation of an android app i made in highschool',
-          }}
-        />
+        <BlogCardWrapper>
+          <BlogCard
+            post={{
+              slug: '/games/squarecolors',
+              title: 'square colors',
+              date: '2023/5/01',
+              body: 'chose the color thats different',
+              description: 'recreation of an android app i made in highschool',
+            }}
+          />
+        </BlogCardWrapper>
+        <BlogCardWrapper>
+          <BlogCard
+            post={{
+              slug: '/games/squaresimon',
+              title: 'square simon',
+              date: '2023/11/15',
+              body: 'remember the sequence',
+              description:
+                'game that showcases how bad my short term memory is',
+            }}
+          />
+        </BlogCardWrapper>
       </CenterRail>
     </Wrapper>
   );

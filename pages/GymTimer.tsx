@@ -9,7 +9,7 @@ import {
   Container,
 } from '@mui/material';
 
-import colors from '@src/lib/colors';
+import colors from '@src/colors';
 
 const Wrapper = styled.div`
   padding-top: 1em;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
-import colors from '@src/lib/colors';
+import colors from '@src/colors';
 
 const Image = styled.img`
   height: 15em;
