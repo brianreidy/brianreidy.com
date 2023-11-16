@@ -146,7 +146,7 @@ export default function SquareColors() {
   } = useGame();
   return (
     <Container
-      sx={{ height: '100vh', display: 'flex', flexDirection: 'column', py: 1 }}
+      sx={{ height: '100dvh', display: 'flex', flexDirection: 'column', py: 1 }}
     >
       <Stack
         direction={{ xs: 'column', md: 'row' }}

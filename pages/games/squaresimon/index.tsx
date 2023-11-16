@@ -88,7 +88,7 @@ const useGame = () => {
   };
 };
 
-export default function SquareColors() {
+export default function SquareSimon() {
   const {
     tilesForBlinking,
     highscore,
@@ -103,7 +103,12 @@ export default function SquareColors() {
   }, []);
   return (
     <Container
-      sx={{ height: '100vh', display: 'flex', flexDirection: 'column', py: 1 }}
+      sx={{
+        height: '100dvh',
+        display: 'flex',
+        flexDirection: 'column',
+        py: 1,
+      }}
     >
       <Stack
         direction={{ xs: 'column', md: 'row' }}
