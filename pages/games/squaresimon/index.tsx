@@ -1,57 +1,138 @@
 import { Button, Container, Grid, Stack, Typography } from '@mui/material';
 import isEqual from 'lodash/isEqual';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import useHighScore from '../../../src/_hooks/useHighScore';
 import { getRandomColorRGB } from '@src/colors';
 
 const buttonArray = Array.from(Array(4).keys());
 
+enum GameStatus {
+  displayingSequence = 'displayingSequence',
+  waitingForInput = 'waitingForInput',
+}
+type State = {
+  currentLevel: number;
+  highScore: number;
+  tilesSequence: number[];
+  tilesClicked: number[];
+  gameStatus: GameStatus;
+  tileIndexBlinking: number;
+};
+
+enum actions {
+  'tileClicked' = 'tileClicked',
+  'win' = 'win',
+  'loss' = 'loss',
+  'blink' = 'blink',
+  'stopBlinking' = 'stopBlinking',
+}
+
+type TileClicked = {
+  type: actions.tileClicked;
+  payload: {
+    tileClicked: number;
+  };
+};
+
+type Win = {
+  type: actions.win;
+  payload: {
+    newTileForSequence: number;
+  };
+};
+
+type Blink = {
+  type: actions.blink;
+  payload: {};
+};
+type StopBlinking = {
+  type: actions.stopBlinking;
+  payload: {};
+};
+type Actions = TileClicked | Win | Blink | StopBlinking;
+
+const reducer = (state: State, action: Actions) => {
+  switch (action.type) {
+    case actions.tileClicked:
+      return {
+        ...state,
+        tilesClicked: [...state.tilesClicked, action.payload.tileClicked],
+      };
+    case actions.win:
+      return {
+        ...state,
+        tilesClicked: [],
+        gameStatus: GameStatus.displayingSequence,
+        currentLevel: state.currentLevel + 1,
+        tilesSequence: [
+          ...state.tilesSequence,
+          action.payload.newTileForSequence,
+          -1,
+        ],
+      };
+    case actions.blink:
+      return {
+        ...state,
+        tileIndexBlinking: state.tileIndexBlinking + 1,
+      };
+    case actions.stopBlinking:
+      return {
+        ...state,
+        gameStatus: GameStatus.waitingForInput,
+        tileIndexBlinking: 0,
+      };
+    default:
+      throw new Error();
+  }
+};
+
+const initialState = {
+  currentLevel: 0,
+  highScore: 0,
+  gameStatus: GameStatus.displayingSequence,
+  tileIndexBlinking: 0,
+  tilesClicked: [],
+  tilesSequence: [-1],
+};
+
 const useGame = () => {
-  const [tilesForBlinking, setTilesForBlinking] = useState<number[]>([-1]);
-  const [blinkingIndex, setBlinkingIndex] = useState(0);
-  const [startBlinking, setStartBlinking] = useState(false);
-  const [currentLevel, setCurrentLevel] = useState(0);
-  const [gameStatus, setGameStatus] = useState<
-    'displayingSequence' | 'waitingForInput' | 'complete'
-  >('displayingSequence');
-  const [inputedSequence, setInputedSequence] = useState<number[]>([]);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [highscore, setHighscore] = useHighScore('highscore_simon');
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+  const {
+    currentLevel,
+    gameStatus,
+    tileIndexBlinking,
+    tilesClicked,
+    tilesSequence,
+  } = state;
 
   useEffect(() => {
-    if (startBlinking) {
-      const intervalId = setInterval(() => {
-        setBlinkingIndex(
-          (prevIndex) => (prevIndex + 1) % tilesForBlinking.length,
-        );
-      }, 1000); // Adjust the interval time as needed
-      if (blinkingIndex === tilesForBlinking.length - 1) {
+    if (gameStatus === GameStatus.displayingSequence) {
+      const intervalId = setInterval(
+        () => dispatch({ type: actions.blink, payload: {} }),
+        1000,
+      ); // Adjust the interval time as needed
+      if (tileIndexBlinking >= tilesSequence.length - 1) {
         clearInterval(intervalId);
-        setStartBlinking(false);
-        setBlinkingIndex(0);
-        setGameStatus('waitingForInput');
+        dispatch({ type: actions.stopBlinking, payload: {} });
       }
       return () => clearInterval(intervalId);
     }
-  }, [startBlinking, blinkingIndex, tilesForBlinking.length]);
+  }, [gameStatus, tileIndexBlinking, tilesSequence.length]);
 
-  const win = () => {
-    setCurrentLevel((level) => level + 1);
-    setTilesForBlinking((tiles) => [
-      ...tiles,
-      Math.floor(Math.random() * 4),
-      -1,
-    ]);
-    setInputedSequence([]);
-    setGameStatus('displayingSequence');
-  };
+  const win = () =>
+    dispatch({
+      type: actions.win,
+      payload: { newTileForSequence: Math.floor(Math.random() * 4) },
+    });
 
   const loss = () => {
-    setCurrentLevel(0);
-    setGameStatus('complete');
-    // todo save score
     if (currentLevel > highscore) {
-      localStorage.setItem('highscore_simon', currentLevel.toString());
       setHighscore(currentLevel);
+      localStorage.setItem('highscore_simon', currentLevel.toString());
       alert(`New High Score: ${currentLevel}\nrefresh the page to play again`);
       return;
     }
@@ -59,41 +140,38 @@ const useGame = () => {
   };
 
   useEffect(() => {
-    const tiles = tilesForBlinking.filter((x) => x !== -1);
-    if (gameStatus === 'displayingSequence') {
-      setStartBlinking(true);
-    } else if (gameStatus === 'waitingForInput') {
-      const tilesUpToInputedSequence = tiles.slice(0, inputedSequence.length);
-      if (!isEqual(tilesUpToInputedSequence, inputedSequence)) {
+    const tiles = tilesSequence.filter((x) => x !== -1);
+    if (gameStatus === 'waitingForInput') {
+      const tilesUpToInputedSequence = tiles.slice(0, tilesClicked.length);
+      if (!isEqual(tilesUpToInputedSequence, tilesClicked)) {
         loss();
       } else {
-        if (tiles.length === inputedSequence.length) {
+        if (tiles.length === tilesClicked.length) {
           win();
         }
       }
     }
-  }, [gameStatus, inputedSequence, tilesForBlinking]);
+  }, [gameStatus, tilesClicked, tilesSequence]);
 
-  const handleClick = (index: number) => {
-    setInputedSequence((prev) => [...prev, index]);
-  };
+  const handleClick = (index: number) =>
+    dispatch({ type: actions.tileClicked, payload: { tileClicked: index } });
 
   return {
-    tilesForBlinking,
+    tilesSequence,
     highscore,
     currentLevel,
     isDisplayingSequence: gameStatus === 'displayingSequence',
-    blinkingIndex,
+    tileIndexBlinking,
     handleClick,
   };
 };
 
 export default function SquareSimon() {
   const {
-    tilesForBlinking,
+    tilesSequence,
     highscore,
     currentLevel,
-    blinkingIndex,
+    tileIndexBlinking,
     handleClick,
     isDisplayingSequence,
   } = useGame();
@@ -131,14 +209,14 @@ export default function SquareSimon() {
               onClick={() => handleClick(value)}
               sx={{
                 minWidth: 'unset',
-                opacity: tilesForBlinking[blinkingIndex] === value ? 1 : 0.3,
+                opacity: tilesSequence[tileIndexBlinking] === value ? 1 : 0.3,
                 display: 'flex',
                 width: '100%',
                 height: '100%',
                 aspectRatio: 1,
                 backgroundColor: isDisplayingSequence ? 'none' : color,
                 ':hover': {
-                  opacity: tilesForBlinking[blinkingIndex] === value ? 1 : 0.3,
+                  opacity: tilesSequence[tileIndexBlinking] === value ? 1 : 0.3,
                   backgroundColor: isDisplayingSequence ? 'none' : color,
                 },
               }}
