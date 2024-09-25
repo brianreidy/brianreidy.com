@@ -22,4 +22,17 @@ const filmShoot2023_2024 = {
   description: '',
 };
 
-export default [sprintFilmShoot2022, summerFilmShoot2022, filmShoot2023_2024];
+const filmShoot2024 = {
+  slug: 'posts/2024julyfilm',
+  title: '2024 summer film shoot, wedding shower, court wedding',
+  date: '2024/7/01',
+  body: 'camera: harmon disposable\n film: Fujicolor 200',
+  description: '',
+};
+
+export default [
+  sprintFilmShoot2022,
+  summerFilmShoot2022,
+  filmShoot2023_2024,
+  filmShoot2024,
+];
