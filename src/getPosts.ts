@@ -38,13 +38,13 @@ export const getPostPaths = async () => {
   }));
 };
 
-const getPosts = async () => {
+const getPosts = async (): Promise<(Post | null | undefined)[]> => {
   const dir = await fs.readdir('./posts');
   return [
     ...NonmarkdownPosts,
     ,
     ...(await Promise.all(
-      dir.map(async (filename) => {
+      dir.map(async (filename): Promise<Post | null> => {
         const file = await fs.readFile(path.join(postsPath, filename));
         const content = parseFrontMatter(file.toString());
         try {
@@ -52,7 +52,7 @@ const getPosts = async () => {
             attributes: { title, date, description = '', type },
             body,
           } = Post.parse(content);
-          return {
+          const final: Post = {
             slug: `posts/${filename.replace(/\.md$/, '')}`,
             title,
             date,
@@ -60,6 +60,7 @@ const getPosts = async () => {
             type,
             description,
           };
+          return final;
         } catch (e) {
           console.log('failed to parse post', e);
           return Promise.resolve(null);
@@ -80,7 +81,7 @@ export const getPost = async (slug: string) => {
   const content = parseFrontMatter(file.toString());
   try {
     const {
-      attributes: { title, date, description = '' },
+      attributes: { title, date, description = '', type },
       body,
     } = Post.parse(content);
     return {
@@ -89,6 +90,7 @@ export const getPost = async (slug: string) => {
       date,
       body,
       description,
+      type,
     };
   } catch (e) {
     console.log('failed to parse post', e);
