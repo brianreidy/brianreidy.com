@@ -25,6 +25,7 @@
     "prismjs": "^1.29.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-lazy-load-image-component": "^1.6.2",
     "styled-components": "^5.3.3",
     "typescript": "^4.6.2",
     "zod": "^3.14.2"
@@ -33,6 +34,7 @@
     "@netlify/plugin-nextjs": "^4.33.0",
     "@types/lodash": "^4.14.192",
     "@types/prismjs": "^1.26.0",
-    "@types/react": "^17.0.40"
+    "@types/react": "^17.0.40",
+    "@types/react-lazy-load-image-component": "^1.6.4"
   }
 }

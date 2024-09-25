@@ -1,21 +1,11 @@
 import styled from '@emotion/styled';
+import Box from '@mui/material/Box';
 import { range } from 'lodash';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-`;
-
-const Picture = styled.picture`
-  max-width: 100%;
-  max-height: 100vh;
-  margin: 0 auto;
-`;
-
-const Image = styled.img`
-  max-width: 100%;
-  max-height: 100vh;
-  margin: 0 auto;
 `;
 
 type Props = {
@@ -27,18 +17,22 @@ export default function Film({ imageCount, folderName }: Props) {
   return (
     <Container>
       {range(1, imageCount + 1).map((i) => (
-        <Picture>
-          <source
-            media="(max-width:600px)"
-            srcSet={`/${folderName}/${i}_mobile.JPEG`}
-          />
-          <Image
-            key={i}
+        <Box key={i} sx={{ p: 1, display: 'flex', justifyContent: 'center' }}>
+          <LazyLoadImage
+            style={{ maxHeight: '100vh', maxWidth: '100%', margin: '0 auto' }}
+            alt=""
             src={`/${folderName}/${i}.JPEG`}
-            alt="images in black and white"
-            loading="lazy"
+            placeholder={
+              <Box
+                sx={{
+                  height: '100%',
+                  width: '100%',
+                  aspectRatio: '16 / 9',
+                }}
+              ></Box>
+            }
           />
-        </Picture>
+        </Box>
       ))}
     </Container>
   );
