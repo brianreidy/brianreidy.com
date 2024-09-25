@@ -98,9 +98,6 @@ const initialState = {
 const useGame = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [highscore, setHighscore] = useHighScore('highscore_simon');
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
   const {
     currentLevel,
     gameStatus,

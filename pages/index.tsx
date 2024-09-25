@@ -3,11 +3,13 @@ import { InferGetStaticPropsType } from 'next';
 import getPosts, { sortPosts } from '@src/getPosts';
 import styled from '@emotion/styled';
 import { compact } from 'lodash';
+import { useState } from 'react';
 
 import Header from '@components/Header';
 import BlogCard from '@components/BlogCard';
 import colors from '@src/colors';
 import { Container, Typography } from '@mui/material';
+import FilterComponent, { Filter } from '@components/FilterComponent';
 
 const Wrapper = styled.div`
   padding-top: 1em;
@@ -31,6 +33,7 @@ const CenterRail = styled(Container)`
 export default function Home({
   posts = [],
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [filter, setFilter] = useState<keyof typeof Filter>(Filter.all);
   return (
     <Wrapper>
       <Head>
@@ -40,11 +43,15 @@ export default function Home({
 
       <CenterRail maxWidth="md">
         <Header />
-        {posts.map((post) => (
-          <BlogCardWrapper key={post.slug}>
-            <BlogCard post={post} />
-          </BlogCardWrapper>
-        ))}
+        <FilterComponent onFilterChange={setFilter} />
+        {posts.map(
+          (post) =>
+            (filter === Filter.all || post.type === filter) && (
+              <BlogCardWrapper key={post.slug}>
+                <BlogCard post={post} />
+              </BlogCardWrapper>
+            ),
+        )}
         {/* TODO: abstract games into its own componentabstract games into its own component */}
 
         <Typography gutterBottom variant="h2" color={colors.text.primary}>

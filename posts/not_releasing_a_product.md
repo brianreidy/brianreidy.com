@@ -1,6 +1,7 @@
 ---
 title: It’s okay to not release a product
 date: 2023/5/18
+type: blogs
 ---
 
 # It’s okay to not release a product

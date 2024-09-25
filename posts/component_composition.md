@@ -1,6 +1,7 @@
 ---
 title: How to compose components in React
 date: 2023/3/31
+type: blogs
 ---
 
 # Component Composition

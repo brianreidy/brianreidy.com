@@ -4,6 +4,7 @@ const sprintFilmShoot2022 = {
   date: '2022/6/8',
   body: 'camera: harmon disposable\n film: kentmere pan 400 b&w film',
   description: '',
+  type: 'photos',
 };
 
 const summerFilmShoot2022 = {
@@ -12,6 +13,7 @@ const summerFilmShoot2022 = {
   date: '2022/9/8',
   body: 'camera: harmon disposable\n film: kentmere pan 400 b&w film',
   description: '',
+  type: 'photos',
 };
 
 const filmShoot2023_2024 = {
@@ -20,6 +22,7 @@ const filmShoot2023_2024 = {
   date: '2024/5/19',
   body: 'camera: harmon disposable\n film: kodak gold 200',
   description: '',
+  type: 'photos',
 };
 
 const filmShoot2024 = {
@@ -28,6 +31,7 @@ const filmShoot2024 = {
   date: '2024/7/01',
   body: 'camera: harmon disposable\n film: Fujicolor 200',
   description: '',
+  type: 'photos',
 };
 
 export default [

@@ -1,6 +1,7 @@
 ---
 title: I made a simple gym rest timer
 date: 2023/10/19
+type: blogs
 ---
 
 # I made a simple gym rest timer

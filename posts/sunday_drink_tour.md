@@ -1,6 +1,7 @@
 ---
 title: sunday drink tour
 date: 2023/5/21
+type: blogs
 ---
 
 # sunday drink tour

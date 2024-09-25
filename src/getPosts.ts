@@ -4,12 +4,14 @@ import parseFrontMatter from 'front-matter';
 import { z } from 'zod';
 
 import NonmarkdownPosts from 'NonMarkdownPosts';
+import { Filter } from '@components/FilterComponent';
 
 const Post = z.object({
   attributes: z.object({
     title: z.string(),
     date: z.string(),
     description: z.string().optional(),
+    type: z.nativeEnum(Filter),
   }),
   body: z.string(),
 });
@@ -21,6 +23,7 @@ export type Post = {
   date: string;
   body: string;
   description: string;
+  type: keyof typeof Filter;
 };
 
 const postsPath = './posts';
@@ -46,7 +49,7 @@ const getPosts = async () => {
         const content = parseFrontMatter(file.toString());
         try {
           const {
-            attributes: { title, date, description = '' },
+            attributes: { title, date, description = '', type },
             body,
           } = Post.parse(content);
           return {
@@ -54,6 +57,7 @@ const getPosts = async () => {
             title,
             date,
             body,
+            type,
             description,
           };
         } catch (e) {

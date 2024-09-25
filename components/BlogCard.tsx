@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import { Post } from '@src/getPosts';
 import colors from '@src/colors';
 
-const BlogCard = ({ post }: { post: Post }) => (
+const BlogCard = ({ post }: { post: Omit<Post, 'type'> }) => (
   <CardActionArea href={`${post.slug}`} component="a">
     <Card
       sx={[
