@@ -38,7 +38,7 @@ const FilterChips = ({
           variant={selectedFilter === filter ? 'filled' : 'outlined'}
           onClick={() => handleFilterChange(filter)}
           color={selectedFilter === filter ? 'secondary' : 'default'}
-          sx={{ cursor: 'pointer' }}
+          sx={{ opacity: '.7', cursor: 'pointer' }}
           icon={FilterIcons[filter]()}
         />
       ))}
