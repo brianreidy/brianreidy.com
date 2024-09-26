@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import colors from '@src/colors';
+import Box from '@mui/material/Box';
 
 const Image = styled.img`
   height: 15em;
   width: 15em;
-  border-radius: 5em;
+  border-radius: 1em;
+  opacity: 0.9;
 `;
 
 const HorizontalView = styled.div`
@@ -38,7 +40,9 @@ export default function Header() {
         </Typography>
 
         {!isDesktop && (
-          <Image src="/brianOnBikeWaterColor.jpeg" alt="Brian on a bike" />
+          <Box sx={{ pt: 1 }}>
+            <Image src="/brianOnBikeWaterColor.jpeg" alt="Brian on a bike" />
+          </Box>
         )}
         <Typography gutterBottom variant="h2" color={colors.text.primary}>
           about
@@ -57,7 +61,7 @@ export default function Header() {
           <br />
           <b>when and where was the last time you saw a monkey?</b>
           <br />
-          2019 at arashiyama monkey park iwatayama in japan.
+          2024 on a beach in krabi, thailand.
         </Typography>
         <Typography gutterBottom variant="h2" color={colors.text.primary}>
           posts

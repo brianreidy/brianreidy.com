@@ -21,7 +21,9 @@ const FilterChips = ({
 }: {
   onFilterChange: (x: keyof typeof Filter) => void;
 }) => {
-  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [selectedFilter, setSelectedFilter] = useState<keyof typeof Filter>(
+    Filter.all,
+  );
   const filters = Object.keys(Filter) as Array<keyof typeof Filter>;
 
   const handleFilterChange = (filter: keyof typeof Filter) => {
