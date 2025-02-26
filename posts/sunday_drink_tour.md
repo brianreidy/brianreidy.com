@@ -2,6 +2,7 @@
 title: sunday drink tour
 date: 2023/5/21
 type: blogs
+description: A fun, laid-back Sunday drink tour exploring unique beverages around the city with friends and a dog, featuring everything from lassi and white coffee to tofu pudding and sugarcane juice.
 ---
 
 # sunday drink tour
