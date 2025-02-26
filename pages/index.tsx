@@ -10,6 +10,7 @@ import BlogCard from '@components/BlogCard';
 import colors from '@src/colors';
 import { Container, Typography } from '@mui/material';
 import FilterComponent, { Filter } from '@components/FilterComponent';
+import { games } from '@src/games';
 
 const Wrapper = styled.div`
   padding-top: 1em;
@@ -52,11 +53,6 @@ export default function Home({
               </BlogCardWrapper>
             ),
         )}
-        {/* TODO: abstract games into its own componentabstract games into its own component */}
-
-        <Typography gutterBottom variant="h2" color={colors.text.primary}>
-          games
-        </Typography>
         <BlogCardWrapper>
           <BlogCard
             post={{
@@ -87,7 +83,7 @@ export default function Home({
 
 export const getStaticProps = async () => {
   const posts = await getPosts();
-  const sortedPosts = sortPosts(compact(posts));
+  const sortedPosts = sortPosts(compact([...posts,...games]));
   return {
     props: { posts: sortedPosts },
   };

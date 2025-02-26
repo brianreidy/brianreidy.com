@@ -2,6 +2,7 @@
 title: How to compose components in React
 date: 2023/3/31
 type: blogs
+description: React components should be small and focused, with a clear distinction between presentation and container components.
 ---
 
 # Component Composition
