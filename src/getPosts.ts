@@ -5,6 +5,7 @@ import { z } from 'zod';
 
 import NonmarkdownPosts from 'NonMarkdownPosts';
 import { Filter } from '@components/FilterComponent';
+import { games } from '@src/games';
 
 const Post = z.object({
   attributes: z.object({
@@ -42,6 +43,7 @@ const getPosts = async (): Promise<(Post | null | undefined)[]> => {
   const dir = await fs.readdir('./posts');
   return [
     ...NonmarkdownPosts,
+    ...games,
     ,
     ...(await Promise.all(
       dir.map(async (filename): Promise<Post | null> => {
