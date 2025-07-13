@@ -38,7 +38,6 @@ export default function Home({
     <Wrapper>
       <Head>
         <title>brian reidy</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <CenterRail maxWidth="md">
