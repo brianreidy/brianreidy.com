@@ -36,9 +36,30 @@ const filmShoot2024: Post = {
   type: 'photos',
 };
 
+const GymTimer: Post = {
+  slug: 'GymTimer',
+  title: 'Gym Timer',
+  date: '2023/10/19',
+  body: 'Gym Timer for tracking time between sets',
+  description: '',
+  type: 'project',
+};
+
+const PomoTimer: Post = {
+  slug: 'PomoTimer',
+  title: 'Pomodoro Timer',
+  date: '2025/7/13',
+  body: 'Pomo Timer for getting stuff done',
+  description:
+    'A Pomodoro Timer helps you stay focused by working in short bursts—usually 25 minutes—followed by quick breaks. It’s an easy way to get stuff done without burning out.',
+  type: 'project',
+};
+
 export default [
   sprintFilmShoot2022,
   summerFilmShoot2022,
   filmShoot2023_2024,
   filmShoot2024,
+  GymTimer,
+  PomoTimer,
 ];
