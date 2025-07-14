@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Chip, Box, Typography } from '@mui/material';
+import { Chip, Box } from '@mui/material';
 import ViewListTwoToneIcon from '@mui/icons-material/ViewListTwoTone';
 import PhotoLibraryTwoToneIcon from '@mui/icons-material/PhotoLibraryTwoTone';
 import AutoStoriesTwoToneIcon from '@mui/icons-material/AutoStoriesTwoTone';
 import VideogameAssetTwoToneIcon from '@mui/icons-material/VideogameAssetTwoTone';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 export const Filter = {
   all: 'all',
   photos: 'photos',
   blogs: 'blogs',
-  games: 'games'
+  games: 'games',
+  project: 'project',
 } as const;
 
 const FilterIcons = {
@@ -17,6 +19,7 @@ const FilterIcons = {
   [Filter.photos]: () => <PhotoLibraryTwoToneIcon />,
   [Filter.blogs]: () => <AutoStoriesTwoToneIcon />,
   [Filter.games]: () => <VideogameAssetTwoToneIcon />,
+  [Filter.project]: () => <FilterListIcon />,
 };
 
 const FilterChips = ({
